@@ -13,3 +13,6 @@ helium-rush-game/data_*/
 # Godot 4+ specific ignores
 helium-rush-game/.godot/
 helium-rush-game/android/
+
+# Obsidian specific ignores
+helium-rush-plan/.obsidian/workspace.json

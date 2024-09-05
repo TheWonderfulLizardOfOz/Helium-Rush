@@ -16,3 +16,7 @@ helium-rush-game/android/
 
 # Obsidian specific ignores
 helium-rush-plan/.obsidian/workspace.json
+
+# VScode specific ignores
+helium-rush-game/.vs/
+helium-rush-game/.vscode/

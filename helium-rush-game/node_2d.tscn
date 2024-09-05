@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4bubiotd1bw5"]
+
+[ext_resource type="Script" path="res://Pawn.cs" id="1_4qtr0"]
+[ext_resource type="Texture2D" uid="uid://d11ji27ep7g78" path="res://BlueSquare.png" id="2_mohk0"]
+[ext_resource type="Script" path="res://CameraController.cs" id="3_jfg11"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5mvhk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mohk0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Pawn" type="Node2D" parent="."]
+script = ExtResource("1_4qtr0")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pawn"]
+sprite_frames = SubResource("SpriteFrames_5mvhk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("3_jfg11")

@@ -1,4 +1,9 @@
-- [ ]  Make pawn
+- [ ] Make pawn
+	- [ ] Class
+	- [ ] Game object
+	- [x] Sprite (Placeholder)
+- [ ] Make tile map
+- [x] Camera
 - [ ] Make pawn move grid based
 - [ ] Make 2 simple rooms
 	- [ ] Kitchen is first room (magic fridge block)

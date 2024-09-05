@@ -9,3 +9,7 @@ helium-rush-game/*.translation
 # Mono-specific ignores
 helium-rush-game/.mono/
 helium-rush-game/data_*/
+
+# Godot 4+ specific ignores
+helium-rush-game/.godot/
+helium-rush-game/android/

@@ -1,0 +1,11 @@
+- [ ]  Make pawn
+- [ ] Make pawn move grid based
+- [ ] Make 2 simple rooms
+	- [ ] Kitchen is first room (magic fridge block)
+	- [ ] Bedroom is second room 
+- [ ] Make pawn free will (Goal orientated action planning)
+	- [ ] Move between rooms A*
+	- [ ] Fulfil needs
+		- [ ] Sleep
+		- [ ] Eat
+	

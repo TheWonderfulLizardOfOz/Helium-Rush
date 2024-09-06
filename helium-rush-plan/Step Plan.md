@@ -8,13 +8,12 @@ kanban-plugin: board
 
 - [ ] Make pawn move in grid
 - [ ] Give pawns free will
-- [ ] Make A* grid search
 - [ ] Make pawns fulfil needs
 
 
 ## In-Progress
 
-- [ ] Make placeholder ground tilemap
+- [ ] Make A* grid search
 
 
 ## Done
@@ -25,6 +24,7 @@ kanban-plugin: board
 - [ ] Make Timer
 - [ ] Make Clock
 - [ ] Add time speed
+- [ ] Make placeholder ground tilemap
 
 
 

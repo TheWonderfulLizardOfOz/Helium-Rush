@@ -7,7 +7,6 @@ kanban-plugin: board
 ## Backlog
 
 - [ ] Make pawn move in grid
-- [ ] Make placeholder rooms
 - [ ] Give pawns free will
 - [ ] Make A* grid search
 - [ ] Make pawns fulfil needs
@@ -21,6 +20,7 @@ kanban-plugin: board
 ## Done
 
 - [ ] Make placeholder pawn
+- [ ] Make placeholder rooms
 - [ ] Make controllable camera
 - [ ] Make Timer
 - [ ] Make Clock

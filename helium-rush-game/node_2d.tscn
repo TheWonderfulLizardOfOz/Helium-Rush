@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4bubiotd1bw5"]
+[gd_scene load_steps=6 format=3 uid="uid://b4bubiotd1bw5"]
 
 [ext_resource type="Script" path="res://Pawn.cs" id="1_4qtr0"]
 [ext_resource type="Texture2D" uid="uid://d11ji27ep7g78" path="res://BlueSquare.png" id="2_mohk0"]
 [ext_resource type="Script" path="res://CameraController.cs" id="3_jfg11"]
+[ext_resource type="Script" path="res://TickTimer.cs" id="4_vmcc2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5mvhk"]
 animations = [{
@@ -15,7 +16,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Node2D" type="Node2D"]
+[node name="Base" type="Node2D"]
 
 [node name="Pawn" type="Node2D" parent="."]
 script = ExtResource("1_4qtr0")
@@ -25,3 +26,8 @@ sprite_frames = SubResource("SpriteFrames_5mvhk")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("3_jfg11")
+
+[node name="TickTimer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+script = ExtResource("4_vmcc2")

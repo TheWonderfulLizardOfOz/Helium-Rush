@@ -6,7 +6,6 @@ kanban-plugin: board
 
 ## Backlog
 
-- [ ] Make placeholder ground tilemap
 - [ ] Make pawn move in grid
 - [ ] Make placeholder rooms
 - [ ] Give pawns free will
@@ -16,12 +15,16 @@ kanban-plugin: board
 
 ## In-Progress
 
+- [ ] Make placeholder ground tilemap
 
 
 ## Done
 
 - [ ] Make placeholder pawn
 - [ ] Make controllable camera
+- [ ] Make Timer
+- [ ] Make Clock
+- [ ] Add time speed
 
 
 

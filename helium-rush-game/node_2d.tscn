@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b4bubiotd1bw5"]
+[gd_scene load_steps=22 format=4 uid="uid://b4bubiotd1bw5"]
 
 [ext_resource type="Script" path="res://Pawn.cs" id="1_4qtr0"]
 [ext_resource type="Texture2D" uid="uid://bfjiokiopkudy" path="res://sprites/character_placeholder.png" id="2_m1ljo"]
@@ -117,6 +117,7 @@ sources/7 = SubResource("TileSetAtlasSource_fmck0")
 script = ExtResource("1_4qtr0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Pawn"]
+position = Vector2(32, 32)
 sprite_frames = SubResource("SpriteFrames_5mvhk")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -128,4 +129,5 @@ autostart = true
 script = ExtResource("4_vmcc2")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD+//3/BwAAAAAAAAAAAP3/BwAAAAAAAAABAP3/BAAAAAAAAAABAPz/BwAAAAAAAGABAPv/BwAAAAAAAGABAPr/BwAAAAAAAGABAPn/BAAAAAAAAGAAAPn/BwAAAAAAADD///n/BwAAAAAAADD+//n/BwAAAAAAADD9//n/BAAAAAAAADD9//r/BwAAAAAAAFD9//v/BwAAAAAAAFD9//z/BwAAAAAAAFD9//3/BAAAAAAAAFABAAEABAAAAAAAAGD7/wQABAAAAAAAAFD7/wEABAAAAAAAADABAAQABAAAAAAAAAD8/wQABwAAAAAAAAD9/wQABwAAAAAAAAD+/wQABwAAAAAAAAD//wQABwAAAAAAAAAAAAQABwAAAAAAAAD8/wEABwAAAAAAAAD9/wEABwAAAAAAAAD//wEABwAAAAAAAAAAAAEABwAAAAAAAAABAAIABwAAAAAAAFABAAMABwAAAAAAAFD7/wIABwAAAAAAAFD7/wMABwAAAAAAAFD8////BwAAAAAAADD9////BwAAAAAAADD+////BwAAAAAAADD/////BwAAAAAAADAAAP//BwAAAAAAADD///r/AQAAAAAAAAAAAAMAAQAAAAAAADA=")
 tile_set = SubResource("TileSet_bmfpe")

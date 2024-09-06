@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjhyoyjcp3js5"
-path="res://.godot/imported/PlaceHolderTileSheet.png-72fe04c583a0b3ad2a865f642c218ff8.ctex"
+uid="uid://c5gmcy72i4u7t"
+path="res://.godot/imported/tileset_floor_placeholder.png-8c59583c14f2618c5f3e83b634cd21a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://PlaceHolderTileSheet.png"
-dest_files=["res://.godot/imported/PlaceHolderTileSheet.png-72fe04c583a0b3ad2a865f642c218ff8.ctex"]
+source_file="res://tilesets/tileset_floor_placeholder.png"
+dest_files=["res://.godot/imported/tileset_floor_placeholder.png-8c59583c14f2618c5f3e83b634cd21a6.ctex"]
 
 [params]
 

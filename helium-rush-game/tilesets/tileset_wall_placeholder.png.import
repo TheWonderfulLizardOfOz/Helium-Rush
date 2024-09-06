@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d11ji27ep7g78"
-path="res://.godot/imported/BlueSquare.png-92a10204a3cb5dabfe570d78c78637dd.ctex"
+uid="uid://cg4ewgc3j10v1"
+path="res://.godot/imported/tileset_wall_placeholder.png-f46bbfb12ce9b370378dcdc2a74715e2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://BlueSquare.png"
-dest_files=["res://.godot/imported/BlueSquare.png-92a10204a3cb5dabfe570d78c78637dd.ctex"]
+source_file="res://tilesets/tileset_wall_placeholder.png"
+dest_files=["res://.godot/imported/tileset_wall_placeholder.png-f46bbfb12ce9b370378dcdc2a74715e2.ctex"]
 
 [params]
 

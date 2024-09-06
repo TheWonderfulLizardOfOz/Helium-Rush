@@ -1,14 +1,13 @@
 [gd_scene load_steps=18 format=4 uid="uid://b4bubiotd1bw5"]
 
-[ext_resource type="Script" path="res://Pawn.cs" id="1_4qtr0"]
+[ext_resource type="Script" path="res://scripts/Pawn.cs" id="1_4qtr0"]
 [ext_resource type="Texture2D" uid="uid://bfjiokiopkudy" path="res://sprites/character_placeholder.png" id="2_m1ljo"]
-[ext_resource type="Script" path="res://CameraController.cs" id="3_jfg11"]
-[ext_resource type="Texture2D" uid="uid://c5gmcy72i4u7t" path="res://tileset_floor_placeholder.png" id="4_3nehp"]
-[ext_resource type="Script" path="res://TickTimer.cs" id="4_vmcc2"]
+[ext_resource type="Script" path="res://scripts/CameraController.cs" id="3_jfg11"]
+[ext_resource type="Texture2D" uid="uid://c5gmcy72i4u7t" path="res://tilesets/tileset_floor_placeholder.png" id="4_3nehp"]
+[ext_resource type="Script" path="res://scripts/TickTimer.cs" id="4_vmcc2"]
 [ext_resource type="Texture2D" uid="uid://bjhyoyjcp3js5" path="res://PlaceHolderTileSheet.png" id="5_20cvq"]
-[ext_resource type="Texture2D" uid="uid://cg4ewgc3j10v1" path="res://tileset_wall_placeholder.png" id="6_c3gg8"]
+[ext_resource type="Texture2D" uid="uid://cg4ewgc3j10v1" path="res://tilesets/tileset_wall_placeholder.png" id="6_c3gg8"]
 [ext_resource type="Texture2D" uid="uid://062gy8b4pl84" path="res://sprites/bed_placeholder.png" id="6_gr104"]
-[ext_resource type="Script" path="res://PawnNavigationAgent.cs" id="8_1w5c2"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_qt123"]
 vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
@@ -69,6 +68,24 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CSharpScript" id="CSharpScript_dh4rs"]
+script/source = "using Godot;
+using System;
+
+public partial class PawnNavigationAgent : NavigationAgent2D
+{
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+}
+"
+
 [node name="Base" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -99,4 +116,4 @@ avoidance_enabled = true
 debug_enabled = true
 debug_use_custom = true
 debug_path_custom_color = Color(0, 0, 0, 1)
-script = ExtResource("8_1w5c2")
+script = SubResource("CSharpScript_dh4rs")

@@ -78,7 +78,7 @@ animations = [{
 
 [node name="Base" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="TopDownCamera" type="Camera2D" parent="."]
 script = ExtResource("1_p8qeb")
 
 [node name="TickTimer" type="Timer" parent="."]

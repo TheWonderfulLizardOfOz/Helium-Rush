@@ -13,4 +13,5 @@
 	- [ ] Fulfil needs
 		- [ ] Sleep
 		- [ ] Eat
-	
+- [ ] Clock
+	- [ ] Ticks

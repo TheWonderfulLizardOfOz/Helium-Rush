@@ -21,7 +21,15 @@ public partial class Pawn : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		navigationAgent.TargetPosition = GetGlobalMousePosition();
+		GetInput();
+	}
+
+	public void GetInput()
+	{
+		if (Input.IsActionJustReleased("left_mouse_click"))
+		{
+			SelectPawn();
+		}
 	}
 
 	public void OnTick()
@@ -32,5 +40,15 @@ public partial class Pawn : Node2D
 		delta.X = (int)Math.Clamp(Math.Round((nextPathPosition.X - GlobalPosition.X)/64),-1,1)*64;
 		delta.Y = (int)Math.Clamp(Math.Round((nextPathPosition.Y - GlobalPosition.Y)/64),-1,1)*64;
 		Translate(delta);
+	}
+
+	public void SelectPawn()
+	{
+		Vector2 mousePos = GetGlobalMousePosition();
+		GD.Print(mousePos, GlobalPosition);
+		if (!(GlobalPosition.X - 32 < mousePos.X && GlobalPosition.X + 32 > mousePos.X && GlobalPosition.Y - 32 < mousePos.Y && GlobalPosition.Y + 32 > mousePos.Y)) 
+		{
+			return;
+		}
 	}
 }

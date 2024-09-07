@@ -60,7 +60,9 @@ public partial class Pawn : Node2D
 		if (!(GlobalPosition.X - 32 < mousePos.X && GlobalPosition.X + 32 > mousePos.X && GlobalPosition.Y - 32 < mousePos.Y && GlobalPosition.Y + 32 > mousePos.Y))
 		{
 			return;
-	public void Tick()
+		}
+	}
+	public void Tick() 
 	{
 		foreach (Need need in needs){
 			need.Tick();

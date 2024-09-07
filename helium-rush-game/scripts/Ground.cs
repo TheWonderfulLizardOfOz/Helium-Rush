@@ -29,7 +29,7 @@ public partial class Ground : TileMapLayer
 
 			foreach(Vector2I cell in cells) 
 			{
-				if (cell == coords && (float) obstacleLayer.GetCellTileData(coords).GetCustomData("passability") == 0)
+				if (cell == coords)
 				{
 					tileData.SetNavigationPolygon(0, null);
 				}

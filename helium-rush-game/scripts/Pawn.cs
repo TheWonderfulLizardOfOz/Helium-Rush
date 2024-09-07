@@ -6,8 +6,6 @@ using Vector2 = Godot.Vector2;
 
 public partial class Pawn : Node2D
 {
-	[Export]
-	int sleepDecayRate = 10;
 
 	List<Need> needs = new List<Need>();
 

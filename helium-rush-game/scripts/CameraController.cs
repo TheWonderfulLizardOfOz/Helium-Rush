@@ -35,8 +35,8 @@ public partial class CameraController : Camera2D
 			Zoom *= zoominesss;
 		}
 		Vector2 newZoom;
-		newZoom.X = Math.Clamp(Zoom.X, zoominesss, zoominesss*4);
-		newZoom.Y = Math.Clamp(Zoom.Y, zoominesss, zoominesss*4);
+		newZoom.X = Math.Clamp(Zoom.X, (float) Math.Pow(zoominesss, -8), (float) Math.Pow(zoominesss, 8));
+		newZoom.Y = Math.Clamp(Zoom.Y, (float) Math.Pow(zoominesss, -8), (float) Math.Pow(zoominesss, 8));
 		Zoom = newZoom;
 	}
 

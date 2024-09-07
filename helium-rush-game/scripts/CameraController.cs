@@ -16,6 +16,7 @@ public partial class CameraController : Camera2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,8 +36,8 @@ public partial class CameraController : Camera2D
 			Zoom *= zoominesss;
 		}
 		Vector2 newZoom;
-		newZoom.X = Math.Clamp(Zoom.X, zoominesss, zoominesss*4);
-		newZoom.Y = Math.Clamp(Zoom.Y, zoominesss, zoominesss*4);
+		newZoom.X = Math.Clamp(Zoom.X, (float) Math.Pow(zoominesss, -8), (float) Math.Pow(zoominesss, 8));
+		newZoom.Y = Math.Clamp(Zoom.Y, (float) Math.Pow(zoominesss, -8), (float) Math.Pow(zoominesss, 8));
 		Zoom = newZoom;
 	}
 

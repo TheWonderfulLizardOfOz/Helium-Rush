@@ -35,18 +35,18 @@ public partial class Pawn : Node2D
 	{
 		if (Input.IsActionJustReleased("left_mouse_click"))
 		{
-			pathFinder.BreadthFirstSearch(new Vector2I((int) (GlobalPosition.X-32)/64, (int) (GlobalPosition.Y-32)/64), GetGlobalMousePosition());
+			pathFinder.BreadthFirstSearch(GlobalPosition, GetGlobalMousePosition());
 		}
 	}
 
 
 	public void Move(){
-		Vector2I nextPathPosition = pathFinder.GetNextPathPosition(new Vector2I((int) (GlobalPosition.X - 32)/64, (int) (GlobalPosition.Y - 32)/64));
-		if (nextPathPosition == Vector2I.Zero)
+		Vector2 nextPathPosition = pathFinder.GetNextPathPosition(GlobalPosition);
+		if (nextPathPosition == Vector2.Zero)
 		{
 			return;
 		}
-		Translate(new Vector2I(nextPathPosition.X*64, nextPathPosition.Y*64));
+		Translate(new Vector2(nextPathPosition.X - 32, nextPathPosition.Y - 32));
 	}
 
 	public void Tick()

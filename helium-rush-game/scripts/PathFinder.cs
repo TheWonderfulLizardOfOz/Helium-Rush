@@ -8,6 +8,8 @@ public partial class PathFinder : Node2D
 	// Called when the node enters the scene tree for the first time.
 	private TileMapLayer overGroundLayer;
 	private List<Vector2I> path;
+	[Export]
+	public int mapSize = 20;
 	public override void _Ready()
 	{
 		overGroundLayer = GetNode<TileMapLayer>("%OverGround");
@@ -19,9 +21,10 @@ public partial class PathFinder : Node2D
 	{
 	}
 
-	public void BreadthFirstSearch(Vector2I start, Vector2 targetPx) 
+	public void BreadthFirstSearch(Vector2 startPx, Vector2 targetPx) 
 	{
 		Vector2I target = overGroundLayer.LocalToMap(targetPx);
+		Vector2I start = overGroundLayer.LocalToMap(startPx);
 		Queue<Vector2I> queue = new Queue<Vector2I>();
 		HashSet<Vector2I> visited = new HashSet<Vector2I>() {start};
 		Dictionary<Vector2I, Vector2I> parents = new Dictionary<Vector2I, Vector2I>();
@@ -33,6 +36,9 @@ public partial class PathFinder : Node2D
 		else if (start == target)
 		{
 			path = new List<Vector2I>();
+			return;
+		} else if (target.X >= mapSize || target.Y >= mapSize)
+		{
 			return;
 		}
 
@@ -75,7 +81,7 @@ public partial class PathFinder : Node2D
 
 		foreach(Vector2I neighbour in neighbours)
 		{
-			if ((overGroundLayer.GetCellTileData(neighbour) == null || (float) overGroundLayer.GetCellTileData(neighbour).GetCustomData("passability") != 0) && neighbour.X < 10 && neighbour.Y < 10) {
+			if ((overGroundLayer.GetCellTileData(neighbour) == null || (float) overGroundLayer.GetCellTileData(neighbour).GetCustomData("passability") != 0) && neighbour.X < mapSize && neighbour.Y < mapSize) {
 				accessibleNeighbours.Add(neighbour);
 			}
 		}
@@ -94,8 +100,9 @@ public partial class PathFinder : Node2D
 		}
 	}
 
-	public Vector2I GetNextPathPosition(Vector2I current)
-	{
+	public Vector2 GetNextPathPosition(Vector2 currentPx)
+	{	
+		Vector2I current = overGroundLayer.LocalToMap(currentPx);
 		if (path.Count == 0) 
 		{
 			return Vector2I.Zero;
@@ -104,7 +111,7 @@ public partial class PathFinder : Node2D
 		{
 			Vector2I nextPosition = path[0];
 			path.RemoveAt(0);
-			return new Vector2I(nextPosition.X - current.X, nextPosition.Y - current.Y);
+			return overGroundLayer.MapToLocal(new Vector2I(nextPosition.X - current.X, nextPosition.Y - current.Y));
 		}
 	}
 }

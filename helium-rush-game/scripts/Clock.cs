@@ -12,8 +12,7 @@ public partial class Clock : Label
 
 	public override void _Ready()
 	{
-		Timer timer = GetNode<Timer>("/root/Base/TickTimer");
-		timer.Timeout += Tick;
+		TickTimer.Instance.Timeout += Tick;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

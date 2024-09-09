@@ -13,6 +13,7 @@ public partial class Ground : TileMapLayer
     public override bool _UseTileDataRuntimeUpdate(Vector2I coords)
     {
       Godot.Collections.Array<Vector2I> cells = obstacleLayer.GetUsedCells();
+
 			foreach (Vector2I cell in cells) 
 			{
 				if (cell == coords) 

@@ -8,9 +8,12 @@ public partial class TickTimer : Timer
 	const float TWOTPS = 4;
 	const float THREETPS = 8;
 
+	public static TickTimer Instance;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		Instance = this;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

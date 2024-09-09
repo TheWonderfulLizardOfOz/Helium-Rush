@@ -9,7 +9,7 @@ public partial class Pawn : Node2D
 
 	List<Need> needs = new List<Need>();
 
-	NavigationAgent2D navigationAgent;
+	PathFinder pathFinder;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -20,18 +20,14 @@ public partial class Pawn : Node2D
 				GD.Print(child.Name);
 			}
 		}
-
-		Timer timer = GetNode<Timer>("/root/Base/TickTimer");
-		timer.Timeout += Tick;
-
-		navigationAgent = GetNode<NavigationAgent2D>("NavigationAgent2D");
+		(GetParent() as Tilemap).OnTick += Tick;
+		pathFinder = GetNode<PathFinder>("PathFinder");
 	}
 	
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		navigationAgent.TargetPosition = GetGlobalMousePosition();
 		GetInput();
 	}
 
@@ -39,26 +35,18 @@ public partial class Pawn : Node2D
 	{
 		if (Input.IsActionJustReleased("left_mouse_click"))
 		{
-			SelectPawn();
+			pathFinder.BreadthFirstSearch(new Vector2I((int) (GlobalPosition.X-32)/64, (int) (GlobalPosition.Y-32)/64), GetGlobalMousePosition());
 		}
 	}
 
+
 	public void Move(){
-		Vector2 delta;
-		Vector2 nextPathPosition = navigationAgent.GetNextPathPosition();
-		//Translate(nextPathPosition - currentPosition);
-		delta.X = (int)Math.Clamp(Math.Round((nextPathPosition.X - GlobalPosition.X)/64),-1,1)*64;
-		delta.Y = (int)Math.Clamp(Math.Round((nextPathPosition.Y - GlobalPosition.Y)/64),-1,1)*64;
-		Translate(delta);
-	}
-	public void SelectPawn()
-	{
-		Vector2 mousePos = GetGlobalMousePosition();
-		GD.Print(mousePos, GlobalPosition);
-		if (!(GlobalPosition.X - 32 < mousePos.X && GlobalPosition.X + 32 > mousePos.X && GlobalPosition.Y - 32 < mousePos.Y && GlobalPosition.Y + 32 > mousePos.Y))
+		Vector2I nextPathPosition = pathFinder.GetNextPathPosition(new Vector2I((int) (GlobalPosition.X - 32)/64, (int) (GlobalPosition.Y - 32)/64));
+		if (nextPathPosition == Vector2I.Zero)
 		{
 			return;
 		}
+		Translate(new Vector2I(nextPathPosition.X*64, nextPathPosition.Y*64));
 	}
 
 	public void Tick()
@@ -66,5 +54,6 @@ public partial class Pawn : Node2D
 		foreach (Need need in needs){
 			need.Tick();
 		}
+		Move();
 	}
 }

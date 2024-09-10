@@ -3,14 +3,39 @@ using System;
 
 public partial class MapCell : Node
 {
-	// Called when the node enters the scene tree for the first time.
+	private Floor floor;
+	public Floor Floor {
+		get {
+			return floor;
+		}
+		set {
+			floor = value;
+		}
+	}
+	private Block block;
+	public Block Block {
+		get {
+			return block;
+		}
+		set {
+			block = value;
+		}
+	}
+
+	public event Action OnStep;
+
 	public override void _Ready()
 	{
+
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+
 	}
 
+	public void Tick()
+	{
+
+	}
 }

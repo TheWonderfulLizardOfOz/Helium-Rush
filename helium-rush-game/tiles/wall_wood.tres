@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Block" load_steps=2 format=3 uid="uid://bnstgull3k0oq"]
+
+[ext_resource type="Script" path="res://scripts/Block.cs" id="1_ayku4"]
+
+[resource]
+script = ExtResource("1_ayku4")
+passability = 0
+name = "Wooden Wall"
+atlasCoords = Vector2i(2, 0)

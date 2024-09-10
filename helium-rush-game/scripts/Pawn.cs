@@ -20,7 +20,7 @@ public partial class Pawn : Node2D
 				GD.Print(child.Name);
 			}
 		}
-		(GetParent() as Tilemap).OnTick += Tick;
+		TickTimer.Instance.Timeout += Tick;
 		pathFinder = GetNode<PathFinder>("PathFinder");
 	}
 	

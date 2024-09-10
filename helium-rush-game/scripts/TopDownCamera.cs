@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Collections.Generic;
 using System.Collections;
 
-public partial class CameraController : Camera2D
+public partial class TopDownCamera : Camera2D
 {
 	[Export]
 	public int speed = 8;

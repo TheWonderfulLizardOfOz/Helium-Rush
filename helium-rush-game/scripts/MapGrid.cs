@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Tilemap : Node2D
+public partial class MapGrid : Node2D
 {
 	public event Action OnTick;
 	public override void _Ready()

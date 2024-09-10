@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=4 uid="uid://b4bubiotd1bw5"]
 
-[ext_resource type="Script" path="res://scripts/Tilemap.cs" id="1_k6cly"]
+[ext_resource type="Script" path="res://scripts/MapGrid.cs" id="1_k6cly"]
 [ext_resource type="Texture2D" uid="uid://c5gmcy72i4u7t" path="res://tilesets/tileset_floor_placeholder.png" id="3_def7v"]
 [ext_resource type="Script" path="res://scripts/Ground.cs" id="4_6e2di"]
 [ext_resource type="Texture2D" uid="uid://062gy8b4pl84" path="res://sprites/bed_placeholder.png" id="4_eyeo7"]
@@ -85,7 +85,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="TileMap" type="Node2D"]
+[node name="MapGrid" type="Node2D"]
 script = ExtResource("1_k6cly")
 
 [node name="Ground" type="TileMapLayer" parent="." node_paths=PackedStringArray("obstacleLayer")]

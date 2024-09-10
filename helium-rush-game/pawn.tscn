@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1cwmw2mncwx7"]
+
+[ext_resource type="Script" path="res://scripts/Pawn.cs" id="1_lgj3d"]
+[ext_resource type="Texture2D" uid="uid://bfjiokiopkudy" path="res://sprites/character_placeholder.png" id="2_jpvph"]
+[ext_resource type="Script" path="res://scripts/SleepNeed.cs" id="3_3wyj1"]
+[ext_resource type="Script" path="res://scripts/PathFinder.cs" id="4_scsu2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5mvhk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_jpvph")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Pawn" type="Node2D"]
+position = Vector2(32, 32)
+script = ExtResource("1_lgj3d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_5mvhk")
+
+[node name="SleepNeed" type="Node2D" parent="."]
+script = ExtResource("3_3wyj1")
+ticksPerDecay = 20
+
+[node name="PathFinder" type="Node2D" parent="."]
+script = ExtResource("4_scsu2")

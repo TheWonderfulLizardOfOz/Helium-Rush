@@ -22,26 +22,26 @@ public partial class AssetLoader : Node
 	private void RecursiveLoad(string folderPath, Load loader, string searchPattern)
 	{
 		try
-        {
-            foreach (string filePath in Directory.GetFiles(folderPath,searchPattern))
-            {
-                loader(filePath);
-            }
+		{
+			foreach (string filePath in Directory.GetFiles(folderPath,searchPattern))
+			{
+				loader(filePath);
+			}
 
-            foreach (string directory in Directory.GetDirectories(folderPath))
-            {
-                RecursiveLoad(directory, loader, searchPattern);
-            }
-        }
-        catch (Exception ex)
-        {
-            GD.Print($"An error occurred while loading {folderPath}: {ex.Message}");
-        }
+			foreach (string directory in Directory.GetDirectories(folderPath))
+			{
+				RecursiveLoad(directory, loader, searchPattern);
+			}
+		}
+		catch (Exception ex)
+		{
+			GD.Print($"An error occurred while loading {folderPath}: {ex.Message}");
+		}
 	}
 
 	private void LoadTile(string filePath)
 	{
-        string fileName = Path.GetFileName(filePath);
+    string fileName = Path.GetFileName(filePath);
 		tiles[fileName] = ResourceLoader.Load(filePath) as MapTileResource;
 	}
 

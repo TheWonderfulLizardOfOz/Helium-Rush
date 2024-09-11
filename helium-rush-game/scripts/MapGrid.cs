@@ -11,8 +11,8 @@ public partial class MapGrid : Node2D
 	[Export]
 	public TileSet tileSet;
 
-	private TileMapLayer[] floorLayers;
-	private TileMapLayer[] blockLayers;
+	private Dictionary<int, TileMapLayer> floorLayers = new Dictionary<int, TileMapLayer>();
+	private Dictionary<int, TileMapLayer> blockLayers = new Dictionary<int, TileMapLayer>();
 
 	private Dictionary<Vector3I, MapCell> grid = new Dictionary<Vector3I, MapCell>();
 
@@ -34,6 +34,9 @@ public partial class MapGrid : Node2D
 			newFloorLayer.Name = $"FloorLayer{z}";
 			TileMapLayer newBlockLayer = new TileMapLayer();
 			newBlockLayer.Name = $"BlockLayer{z}";
+
+			floorLayers.Add(z, newFloorLayer);
+			blockLayers.Add(z, newBlockLayer);
 
 			newFloorLayer.TileSet = tileSet;
 			newBlockLayer.TileSet = tileSet;

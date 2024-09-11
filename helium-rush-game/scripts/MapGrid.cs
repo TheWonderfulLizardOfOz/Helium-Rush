@@ -28,7 +28,7 @@ public partial class MapGrid : Node2D
 
 	private void Initiate()
 	{
-		for (int z=zRange.X;z<zRange.Y;z++)
+		for (int z=zRange.X;z<=zRange.Y;z++)
 		{
 			TileMapLayer newFloorLayer = new TileMapLayer();
 			newFloorLayer.Name = $"FloorLayer{z}";
@@ -47,12 +47,23 @@ public partial class MapGrid : Node2D
 			AddChild(newFloorLayer);
 			AddChild(newBlockLayer);
 
-			for (int x=0;x<mapSize.X;x++){
-				for (int y=0;y<mapSize.Y;y++){
+			for (int x=0;x<mapSize.X;x++)
+			{
+				for (int y=0;y<mapSize.Y;y++)
+				{
 					grid[new Vector3I(x,y,z)] = new MapCell();
 				}
 			}
 		}
+
+		for (int x = 0; x < mapSize.X; x++) 
+		{
+			for (int y = 0; y< mapSize.Y; y++)
+			{
+				PlaceFloor(new Vector3I(x, y, 0), (Floor) AssetLoader.Instance.tiles["floor_grass"]);
+			}
+		}
+
 		Node2D entities = new Node2D();
 		entities.Name = "EntityLayer";
 		entities.ZIndex = 0;
@@ -66,6 +77,7 @@ public partial class MapGrid : Node2D
 			GD.Print("Tried to place floor outside of grid");
 			return;
 		}
+		floorLayers[position.Z].SetCell(new Vector2I(position.X, position.Y), 0, floor.atlasCoords);
 		grid[position].Floor = floor;
 	}
 

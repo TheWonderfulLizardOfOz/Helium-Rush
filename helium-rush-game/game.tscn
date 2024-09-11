@@ -7,6 +7,7 @@
 [node name="Game" type="Node2D"]
 
 [node name="MapGrid" parent="." instance=ExtResource("1_bi7mt")]
+mapSize = Vector2i(20, 20)
 
 [node name="TopDownCamera" type="Camera2D" parent="."]
 script = ExtResource("3_gsg4g")

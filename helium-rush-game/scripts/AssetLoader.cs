@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 
 public partial class AssetLoader : Node
 {
@@ -9,14 +10,15 @@ public partial class AssetLoader : Node
 
 	private delegate void Load(string filename);
 
-	public Dictionary<string, MapTileResource> tiles;
-	public Dictionary<string, PackedScene> entities;
+	public Dictionary<string, MapTileResource> tiles = new Dictionary<string, MapTileResource>();
+	public Dictionary<string, PackedScene> entities = new Dictionary<string, PackedScene>();
 
 	public override void _Ready()
 	{
 		Instance = this;
-		RecursiveLoad("res://tiles", LoadTile, "*.tres");
-		RecursiveLoad("res://entities", LoadEntity, "*.tscn");
+		//RecursiveLoad("res://tiles", LoadTile, "*.tres");
+		//RecursiveLoad("res://entities", LoadEntity, "*.tscn");
+		LoadTile("res://tiles/floor_grass.tres");
 	}
 
 	private void RecursiveLoad(string folderPath, Load loader, string searchPattern)
@@ -41,13 +43,17 @@ public partial class AssetLoader : Node
 
 	private void LoadTile(string filePath)
 	{
-    string fileName = Path.GetFileName(filePath);
-		tiles[fileName] = ResourceLoader.Load(filePath) as MapTileResource;
+		string fileName = Path.GetFileName(filePath);
+		Regex regex = new Regex(@"(.*?)(?=\.tres)");
+		fileName = regex.Match(fileName).Groups[0].Value;
+		tiles[fileName] = GD.Load(filePath) as MapTileResource;
 	}
 
 	private void LoadEntity(string filePath)
 	{
 		string fileName = Path.GetFileName(filePath);
-		entities[fileName] = ResourceLoader.Load(filePath) as PackedScene;
+		Regex regex = new Regex(@"(.*?)(?=\.tres)");
+		fileName = regex.Match(fileName).Groups[0].Value;
+		entities[fileName] = GD.Load(filePath) as PackedScene;
 	}
 }

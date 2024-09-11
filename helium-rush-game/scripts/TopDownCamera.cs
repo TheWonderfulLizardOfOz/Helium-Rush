@@ -16,6 +16,8 @@ public partial class TopDownCamera : Camera2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		Vector2I mapSize = GetNode<MapGrid>("../MapGrid").mapSize;
+		Position = new Vector2((mapSize.X / 2)*64, (mapSize.Y / 2)*64);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

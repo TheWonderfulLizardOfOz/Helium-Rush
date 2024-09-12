@@ -16,7 +16,8 @@ public partial class MapGrid : Node2D
 
 	private Dictionary<Vector3I, MapCell> grid = new Dictionary<Vector3I, MapCell>();
 
-	private Node2D[] entities;
+	private Dictionary<int, Pawn> entities = new Dictionary<int, Pawn>();
+	
 	private int nextEntityID = 0;
 
 	public override void _Ready()
@@ -68,6 +69,7 @@ public partial class MapGrid : Node2D
 		entities.Name = "EntityLayer";
 		entities.ZIndex = 0;
 		AddChild(entities);
+		SpawnEntity(Vector3I.Zero, AssetLoader.Instance.entities["pawn"], this);
 	}
 
 	public void PlaceFloor(Vector3I position, Floor floor)
@@ -101,14 +103,15 @@ public partial class MapGrid : Node2D
 		throw new NotImplementedException("RemoveBlock() not implemented yet");
 	}
 
-	public int SpawnEntity(Vector3I position, PackedScene entityScene)
+	public int SpawnEntity(Vector3I position, PackedScene entityScene, MapGrid mapGrid)
 	{
 		int id = nextEntityID++;
-		Node2D entity = entityScene.Instantiate() as Node2D;
-		entity.Position = new Vector2I(position.X, position.Y);
+		Pawn entity = entityScene.Instantiate() as Pawn;
+		entity.Position = floorLayers[position.Z].MapToLocal(new Vector2I(position.X, position.Y));
 		entity.ZIndex = position.Z*2+1;
 		entities[id] = entity;
 		AddChild(entity);
+		entity.SetMapGrid(mapGrid);
 		return id;
 	}
 
@@ -125,5 +128,28 @@ public partial class MapGrid : Node2D
 	public void Tick()
 	{
 		
+	}
+
+	public MapCell GetCell(Vector3I position)
+	{
+		if (grid.ContainsKey(position))
+		{
+			return grid[position];
+		} else 
+		{
+			return null;
+		}
+	}
+
+	public Vector3I PxToAtlas(Vector3 coords)
+	{
+		Vector2I xyCoords = floorLayers[(int) coords.Z].LocalToMap(new Vector2(coords.X, coords.Y));
+		return new Vector3I(xyCoords.X, xyCoords.Y, (int)coords.Z);
+	}
+
+	public Vector3 AtlasToPx(Vector3I coords)
+	{
+		Vector2 xyCoords = floorLayers[coords.Z].MapToLocal(new Vector2I(coords.X, coords.Y));
+		return new Vector3(xyCoords.X, xyCoords.Y, coords.Z);
 	}
 }

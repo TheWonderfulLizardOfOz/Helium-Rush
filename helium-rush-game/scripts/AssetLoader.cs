@@ -23,7 +23,6 @@ public partial class AssetLoader : Node
 
 	private void LoadTiles(string folderPath)
 	{
-
     DirAccess dir_access = DirAccess.Open(folderPath);
     if (dir_access == null) { return; }
 
@@ -32,18 +31,17 @@ public partial class AssetLoader : Node
 
     foreach(string fileName in files)
     {
-        Resource loaded_resource = GD.Load<Resource>(folderPath + fileName);
-        if (loaded_resource == null) { continue; }
-				
-				Regex regex = new Regex(@"(.*?)(?=\.tres)");
-				GD.Print(fileName);
-				tiles[regex.Match(fileName).Groups[0].Value] = loaded_resource as MapTileResource;
+			Resource loaded_resource = GD.Load<Resource>(folderPath + fileName);
+			if (loaded_resource == null) { continue; }
+			
+			Regex regex = new Regex(@"(.*?)(?=\.tres)");
+			GD.Print(fileName);
+			tiles[regex.Match(fileName).Groups[0].Value] = loaded_resource as MapTileResource;
     }
 	}
 
 	private void LoadEntities(string folderPath)
 	{
-
     DirAccess dir_access = DirAccess.Open(folderPath);
     if (dir_access == null) { return; }
 
@@ -52,12 +50,12 @@ public partial class AssetLoader : Node
 
     foreach(string fileName in files)
     {
-        Resource loaded_resource = GD.Load<Resource>(folderPath + fileName);
-        if (loaded_resource == null) { continue; }
-				
-				Regex regex = new Regex(@"(.*?)(?=\.tscn)");
-				GD.Print(fileName);
-				entities[regex.Match(fileName).Groups[0].Value] = loaded_resource as PackedScene;
+			Resource loaded_resource = GD.Load<Resource>(folderPath + fileName);
+			if (loaded_resource == null) { continue; }
+			
+			Regex regex = new Regex(@"(.*?)(?=\.tscn)");
+			GD.Print(fileName);
+			entities[regex.Match(fileName).Groups[0].Value] = loaded_resource as PackedScene;
     }
 	}
 }

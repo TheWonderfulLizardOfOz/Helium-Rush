@@ -6,14 +6,21 @@ using System.Collections.Generic;
 public partial class PathFinder : Node2D
 {
 	// Called when the node enters the scene tree for the first time.
-	private TileMapLayer overGroundLayer;
-	private List<Vector2I> path;
-	[Export]
-	public int mapSize = 20;
+	private TileMapLayer floorLayer;
+	private TileMapLayer blockLayer;
+
+	private List<Vector3I> path= new List<Vector3I>();
+
+	private MapGrid mapGrid;
+	public MapGrid MapGrid {
+		set {
+			mapGrid = value;
+		}
+	}
+
 	public override void _Ready()
 	{
-		overGroundLayer = GetNode<TileMapLayer>("%OverGround");
-		path = new List<Vector2I>();
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -21,35 +28,40 @@ public partial class PathFinder : Node2D
 	{
 	}
 
-	public void BreadthFirstSearch(Vector2 startPx, Vector2 targetPx) 
+	public void BreadthFirstSearch(Vector3 startPx, Vector3 targetPx) 
 	{
-		Vector2I target = overGroundLayer.LocalToMap(targetPx);
-		Vector2I start = overGroundLayer.LocalToMap(startPx);
-		Queue<Vector2I> queue = new Queue<Vector2I>();
-		HashSet<Vector2I> visited = new HashSet<Vector2I>() {start};
-		Dictionary<Vector2I, Vector2I> parents = new Dictionary<Vector2I, Vector2I>();
-		//target is impassable
-		if (overGroundLayer.GetCellTileData(target) != null && (float) overGroundLayer.GetCellTileData(target).GetCustomData("passability") == 0)
+		//convert px to atlasmap coords
+		Vector3I target = mapGrid.PxToAtlas(targetPx);
+		Vector3I start =  mapGrid.PxToAtlas(startPx);
+
+
+		Queue<Vector3I> queue = new Queue<Vector3I>();
+		HashSet<Vector3I> visited = new HashSet<Vector3I>() {start};
+		Dictionary<Vector3I, Vector3I> parents = new Dictionary<Vector3I, Vector3I>();
+
+
+		//TODO Check if target accessible
+		if (start == target)
 		{
 			return;
-		} 
-		else if (start == target)
+		} else if (mapGrid.GetCell(target) == null)
 		{
-			path = new List<Vector2I>();
 			return;
-		} else if (target.X >= mapSize || target.Y >= mapSize)
+		}
+		else if (GetWeight(mapGrid.GetCell(target)) == 0)
 		{
 			return;
 		}
 
+
 		queue.Enqueue(start);
 		while (queue.Count > 0) 
 		{
-			Vector2I currentNode = queue.Dequeue();
-			List<Vector2I> neighbours = GetAccessibleNeighbours(currentNode);
+			Vector3I currentNode = queue.Dequeue();
+			List<Vector3I> neighbours = GetAccessibleNeighbours(currentNode);
 			if (neighbours == null)
 				continue;
-			foreach (Vector2I neighbour in neighbours) 
+			foreach (Vector3I neighbour in neighbours) 
 			{	
 				if (!visited.Contains(neighbour))
 				{
@@ -70,18 +82,19 @@ public partial class PathFinder : Node2D
 		}
 	}
 
-	public List<Vector2I> GetAccessibleNeighbours(Vector2I node)
+	public List<Vector3I> GetAccessibleNeighbours(Vector3I node)
 	{
-		List<Vector2I> neighbours = new List<Vector2I>();
-		List<Vector2I> accessibleNeighbours = new List<Vector2I>();
-		neighbours.Add(new Vector2I(node.X, node.Y + 1));
-		neighbours.Add(new Vector2I(node.X, node.Y - 1));
-		neighbours.Add(new Vector2I(node.X + 1, node.Y));
-		neighbours.Add(new Vector2I(node.X - 1, node.Y));
+		List<Vector3I> neighbours = new List<Vector3I>();
+		List<Vector3I> accessibleNeighbours = new List<Vector3I>();
+		neighbours.Add(new Vector3I(node.X, node.Y + 1, node.Z));
+		neighbours.Add(new Vector3I(node.X, node.Y - 1, node.Z));
+		neighbours.Add(new Vector3I(node.X + 1, node.Y, node.Z));
+		neighbours.Add(new Vector3I(node.X - 1, node.Y, node.Z));
 
-		foreach(Vector2I neighbour in neighbours)
+		foreach(Vector3I neighbour in neighbours)
 		{
-			if ((overGroundLayer.GetCellTileData(neighbour) == null || (float) overGroundLayer.GetCellTileData(neighbour).GetCustomData("passability") != 0) && neighbour.X < mapSize && neighbour.Y < mapSize) {
+			if (mapGrid.GetCell(neighbour) != null && GetWeight(mapGrid.GetCell(neighbour)) != 0)
+			{
 				accessibleNeighbours.Add(neighbour);
 			}
 		}
@@ -89,10 +102,10 @@ public partial class PathFinder : Node2D
 		return accessibleNeighbours;
 	}
 
-	public void GetPath(Dictionary<Vector2I, Vector2I> parents, Vector2I end, Vector2I start) 
+	public void GetPath(Dictionary<Vector3I, Vector3I> parents, Vector3I end, Vector3I start) 
 	{
-		path = new List<Vector2I>();
-		Vector2I current = end;
+		path = new List<Vector3I>();
+		Vector3I current = end;
 		while (current != start) 
 		{
 			path.Insert(0, current);
@@ -100,18 +113,35 @@ public partial class PathFinder : Node2D
 		}
 	}
 
-	public Vector2 GetNextPathPosition(Vector2 currentPx)
+	public Vector3 GetNextPathPosition(Vector3I currentPx)
 	{	
-		Vector2I current = overGroundLayer.LocalToMap(currentPx);
+		
+		Vector3I current = mapGrid.PxToAtlas(currentPx);
 		if (path.Count == 0) 
 		{
-			return Vector2I.Zero;
+			return Vector3I.Zero;
 		}
 		else 
 		{
-			Vector2I nextPosition = path[0];
+			Vector3I nextPosition = path[0];
 			path.RemoveAt(0);
-			return overGroundLayer.MapToLocal(new Vector2I(nextPosition.X - current.X, nextPosition.Y - current.Y));
+			return mapGrid.AtlasToPx(new Vector3I(nextPosition.X - current.X, nextPosition.Y - current.Y, nextPosition.Z));
 		}
 	}
+
+	public int GetWeight(MapCell cell)
+	{
+		if (cell.Floor == null) 
+		{
+			return 0;
+		} 
+		else if (cell.Block == null)
+		{
+			return cell.Floor.walkability;
+		} else
+		{
+			return Math.Min(cell.Block.passability, cell.Floor.walkability);
+		}
+	}
+
 }

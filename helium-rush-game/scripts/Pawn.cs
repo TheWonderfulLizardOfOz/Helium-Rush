@@ -2,12 +2,15 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 using Vector2 = Godot.Vector2;
+using Vector3 = Godot.Vector3;
 
 public partial class Pawn : Node2D
 {
 
 	List<Need> needs = new List<Need>();
+	public MapGrid mapGrid;
 
 	PathFinder pathFinder;
 
@@ -35,14 +38,14 @@ public partial class Pawn : Node2D
 	{
 		if (Input.IsActionJustReleased("left_mouse_click"))
 		{
-			pathFinder.BreadthFirstSearch(GlobalPosition, GetGlobalMousePosition());
+			pathFinder.BreadthFirstSearch(GetPosition3(), new Vector3I((int) GetGlobalMousePosition().X, (int) GetGlobalMousePosition().Y, 0));
 		}
 	}
 
 
 	public void Move(){
-		Vector2 nextPathPosition = pathFinder.GetNextPathPosition(GlobalPosition);
-		if (nextPathPosition == Vector2.Zero)
+		Vector3 nextPathPosition = pathFinder.GetNextPathPosition(GetPosition3());
+		if (nextPathPosition == Vector3.Zero)
 		{
 			return;
 		}
@@ -55,5 +58,16 @@ public partial class Pawn : Node2D
 			need.Tick();
 		}
 		Move();
+	}
+
+	public void SetMapGrid(MapGrid mapGrid)
+	{
+		this.mapGrid = mapGrid;
+		pathFinder.MapGrid = mapGrid;
+	}
+
+	public Vector3I GetPosition3()
+	{
+		return new Vector3I((int) Position.X, (int) Position.Y, ZIndex/2);
 	}
 }

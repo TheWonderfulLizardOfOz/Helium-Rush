@@ -16,44 +16,48 @@ public partial class AssetLoader : Node
 	public override void _Ready()
 	{
 		Instance = this;
-		//RecursiveLoad("res://tiles", LoadTile, "*.tres");
-		//RecursiveLoad("res://entities", LoadEntity, "*.tscn");
-		LoadTile("res://tiles/floor_grass.tres");
+		LoadTiles("res://tiles/");
+		LoadEntities("res://entities/");
 	}
 
-	private void RecursiveLoad(string folderPath, Load loader, string searchPattern)
-	{
-		try
-		{
-			foreach (string filePath in Directory.GetFiles(folderPath,searchPattern))
-			{
-				loader(filePath);
-			}
 
-			foreach (string directory in Directory.GetDirectories(folderPath))
-			{
-				RecursiveLoad(directory, loader, searchPattern);
-			}
-		}
-		catch (Exception ex)
-		{
-			GD.Print($"An error occurred while loading {folderPath}: {ex.Message}");
-		}
+	private void LoadTiles(string folderPath)
+	{
+
+    DirAccess dir_access = DirAccess.Open(folderPath);
+    if (dir_access == null) { return; }
+
+    string[] files = dir_access.GetFiles();
+    if (files == null) { return; }
+
+    foreach(string fileName in files)
+    {
+        Resource loaded_resource = GD.Load<Resource>(folderPath + fileName);
+        if (loaded_resource == null) { continue; }
+				
+				Regex regex = new Regex(@"(.*?)(?=\.tres)");
+				GD.Print(fileName);
+				tiles[regex.Match(fileName).Groups[0].Value] = loaded_resource as MapTileResource;
+    }
 	}
 
-	private void LoadTile(string filePath)
+	private void LoadEntities(string folderPath)
 	{
-		string fileName = Path.GetFileName(filePath);
-		Regex regex = new Regex(@"(.*?)(?=\.tres)");
-		fileName = regex.Match(fileName).Groups[0].Value;
-		tiles[fileName] = GD.Load(filePath) as MapTileResource;
-	}
 
-	private void LoadEntity(string filePath)
-	{
-		string fileName = Path.GetFileName(filePath);
-		Regex regex = new Regex(@"(.*?)(?=\.tres)");
-		fileName = regex.Match(fileName).Groups[0].Value;
-		entities[fileName] = GD.Load(filePath) as PackedScene;
+    DirAccess dir_access = DirAccess.Open(folderPath);
+    if (dir_access == null) { return; }
+
+    string[] files = dir_access.GetFiles();
+    if (files == null) { return; }
+
+    foreach(string fileName in files)
+    {
+        Resource loaded_resource = GD.Load<Resource>(folderPath + fileName);
+        if (loaded_resource == null) { continue; }
+				
+				Regex regex = new Regex(@"(.*?)(?=\.tscn)");
+				GD.Print(fileName);
+				entities[regex.Match(fileName).Groups[0].Value] = loaded_resource as PackedScene;
+    }
 	}
 }

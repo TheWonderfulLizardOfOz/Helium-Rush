@@ -62,6 +62,10 @@ public partial class MapGrid : Node2D
 			for (int y = 0; y< mapSize.Y; y++)
 			{
 				PlaceFloor(new Vector3I(x, y, 0), (Floor) AssetLoader.Instance.tiles["floor_grass"]);
+				if (GD.Randf() < 0.2f)
+				{
+					PlaceBlock(new Vector3I(x,y,0), (Block)AssetLoader.Instance.tiles["wall_wood"]);
+				}
 			}
 		}
 
@@ -85,7 +89,8 @@ public partial class MapGrid : Node2D
 
 	public void RemoveFloor(Vector3I position, Floor floor)
 	{
-		throw new NotImplementedException("RemoveFloor() not implemented yet");
+		floorLayers[position.Z].EraseCell(new Vector2I(position.X, position.Y));
+		grid[position].Floor = null;
 	}
 
 	public void PlaceBlock(Vector3I position, Block block)
@@ -95,12 +100,14 @@ public partial class MapGrid : Node2D
 			GD.Print("Tried to place block outside of grid");
 			return;
 		}
+		blockLayers[position.Z].SetCell(new Vector2I(position.X, position.Y), 0, block.atlasCoords);
 		grid[position].Block = block;
 	}
 
 	public void RemoveBlock(Vector3I position, Block block)
 	{
-		throw new NotImplementedException("RemoveBlock() not implemented yet");
+		blockLayers[position.Z].EraseCell(new Vector2I(position.X, position.Y));
+		grid[position].Block = null;
 	}
 
 	public int SpawnEntity(Vector3I position, PackedScene entityScene, MapGrid mapGrid)
